@@ -3,7 +3,7 @@
     {
       "name": "Samsung Series 4",
       "id": 0,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 13999,
         "display": 22500
@@ -13,7 +13,7 @@
     {
       "name": "Samsung Super 6",
       "id": 1,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 35999,
         "display": 66900
@@ -23,7 +23,7 @@
     {
       "name": "Samsung The Frame",
       "id": 2,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 84999,
         "display": 133900
@@ -33,7 +33,7 @@
     {
       "name": "Thomson B9 Pro",
       "id": 3,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 9999,
         "display": 16999
@@ -43,7 +43,7 @@
     {
       "name": "LG Ultra HD",
       "id": 4,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 39990,
         "display": 79990
@@ -53,7 +53,7 @@
     {
       "name": "Vu Ready LED TV",
       "id": 5,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 7999,
         "display": 17000
@@ -63,7 +63,7 @@
     {
       "name": "Koryo Android TV",
       "id": 6,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 55999,
         "display": 199990
@@ -73,7 +73,7 @@
     {
       "name": "Micromax LED Smart",
       "id": 7,
-      "image": "recipeThumb-08.jpg",
+      "image": "https://m.media-amazon.com/images/I/713rQq1bF6L._AC_UY436_FMwebp_QL65_.jpg",
       "price": {
         "actual": 9999,
         "display": 27990
