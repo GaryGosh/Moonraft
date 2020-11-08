@@ -108,8 +108,9 @@ async function fetchData() {
             <h6 class="cart__item__name">${product.name}</h6>
             <button class="btn" data-action="INCREASE_ITEM"><i class="fas fa-plus"></i></button>
             <h6 class="cart__item__quantity">${product.quantity}</h6>
-            <h6 class="cart__item__price">${product.price}</h6>
             <button class="btn" data-action="DECREASE_ITEM"><i class="fas fa-minus"></i></button>
+            <h6 class="cart__item__price">${product.price}</h6>
+            
           </div>`
         );
         addCartFooter();
@@ -145,6 +146,8 @@ async function fetchData() {
             cartItemDOM.querySelector(
               ".cart__item__quantity"
             ).innerText = ++cartItem.quantity;
+            cartItemDOM.querySelector(".cart__item__price").innerText =
+              cartItem.price * product.quantity;
             saveCart();
           }
         });
@@ -157,6 +160,8 @@ async function fetchData() {
               cartItemDOM.querySelector(
                 ".cart__item__quantity"
               ).innerText = --cartItem.quantity;
+              cartItemDOM.querySelector(".cart__item__price").innerText =
+                cartItem.price * product.quantity;
               saveCart();
             } else {
               removeItem(product, cartItemDOM, addToCartButton);
@@ -180,13 +185,22 @@ async function fetchData() {
 
       function addCartFooter() {
         if (document.querySelector(".cart-footer") === null) {
+          let cartTotal = 0;
+          let cartQuantity = 0;
+          cart.forEach((cartItem) => {
+            cartTotal += cartItem.quantity * cartItem.price;
+            cartQuantity += cartItem.quantity;
+          });
           cartDOM.insertAdjacentHTML(
             "afterend",
             `
-            <div class="cart-footer">
-                <h1>hi</h1>
-            </div>
-        `
+                <div class="cart-footer">
+                    <p>Total</p>
+                    <ul>
+                        <li>Items(${cartQuantity})<span>:</span><span>${cartTotal}</span></li>
+                    </ul>
+                </div>
+            `
           );
         }
       }

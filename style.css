@@ -43,6 +43,11 @@ img {
   object-fit: contain;
   margin-top: 9px;
   margin-bottom: 15px;
+  transition: transform 0.5s ease-in-out;
+}
+
+.productWrapper:hover img {
+  transform: scale(1.05);
 }
 
 .productDescription {
@@ -74,6 +79,14 @@ button {
   margin-bottom: 7px;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+button:disabled:hover {
+  cursor: auto;
+}
+
 .cart {
   width: 35vw;
 }
@@ -81,4 +94,15 @@ button {
 .title {
   display: flex;
   justify-content: space-around;
+}
+
+.cart__item__image {
+  max-width: 28px;
+}
+
+.cart__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
