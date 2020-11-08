@@ -141,27 +141,35 @@ async function fetchData() {
       }
 
       function increaseItem(product, cartItemDOM) {
+        let cartTotal = 0;
         cart.forEach((cartItem) => {
           if (cartItem.name === product.name) {
+            cartTotal += cartItem.quantity * cartItem.price;
             cartItemDOM.querySelector(
               ".cart__item__quantity"
             ).innerText = ++cartItem.quantity;
             cartItemDOM.querySelector(".cart__item__price").innerText =
               cartItem.price * product.quantity;
+            cartItemDOM.querySelectorAll(".cartTotal").innerText = cartTotal;
+
             saveCart();
           }
         });
       }
 
       function decreaseItem(product, cartItemDOM, addToCartButton) {
+        let cartTotal = 0;
         cart.forEach((cartItem) => {
           if (cartItem.name === product.name) {
+            cartTotal += cartItem.quantity * cartItem.price;
             if (cartItem.quantity > 1) {
               cartItemDOM.querySelector(
                 ".cart__item__quantity"
               ).innerText = --cartItem.quantity;
               cartItemDOM.querySelector(".cart__item__price").innerText =
                 cartItem.price * product.quantity;
+              cartItemDOM.querySelectorAll(".cartTotal").innerText = cartTotal;
+
               saveCart();
             } else {
               removeItem(product, cartItemDOM, addToCartButton);
@@ -197,7 +205,9 @@ async function fetchData() {
                 <div class="cart-footer">
                     <p>Total</p>
                     <ul>
-                        <li>Items(${cartQuantity})<span>:</span><span>${cartTotal}</span></li>
+                        <li>Items(${cartQuantity})<span>:</span><span class="cartTotal">${cartTotal}</span></li>
+                        <li class="subTotoal"><b>Order Total<b><span>:</span><span class="cartTotal">$${cartTotal}</span></li>
+
                     </ul>
                 </div>
             `
@@ -206,7 +216,6 @@ async function fetchData() {
       }
       function saveCart() {
         localStorage.setItem("cart", JSON.stringify(cart));
-        /* countCartTotal(); */
       }
     })
     .catch((err) => {
