@@ -140,6 +140,7 @@ async function fetchData() {
         });
       }
 
+      const cartFooter = document.querySelector(".cart-footer");
       function increaseItem(product, cartItemDOM) {
         let cartTotal = 0;
         cart.forEach((cartItem) => {
@@ -150,7 +151,8 @@ async function fetchData() {
             ).innerText = ++cartItem.quantity;
             cartItemDOM.querySelector(".cart__item__price").innerText =
               cartItem.price * product.quantity;
-            cartItemDOM.querySelectorAll(".cartTotal").innerText = cartTotal;
+            cartFooter.querySelector(".cartTotal").innerText = cartTotal;
+            cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
 
             saveCart();
           }
@@ -168,8 +170,8 @@ async function fetchData() {
               ).innerText = --cartItem.quantity;
               cartItemDOM.querySelector(".cart__item__price").innerText =
                 cartItem.price * product.quantity;
-              cartItemDOM.querySelectorAll(".cartTotal").innerText = cartTotal;
-
+              cartFooter.querySelector(".cartTotal").innerText = cartTotal;
+              cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
               saveCart();
             } else {
               removeItem(product, cartItemDOM, addToCartButton);
@@ -206,7 +208,7 @@ async function fetchData() {
                     <p>Total</p>
                     <ul>
                         <li>Items(${cartQuantity})<span>:</span><span class="cartTotal">${cartTotal}</span></li>
-                        <li class="subTotoal"><b>Order Total<b><span>:</span><span class="cartTotal">$${cartTotal}</span></li>
+                        <li class="subTotoal"><b>Order Total<b><span>:</span><span class="subTotal">$${cartTotal}</span></li>
 
                     </ul>
                 </div>

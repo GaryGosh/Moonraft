@@ -96,6 +96,10 @@ button:disabled:hover {
 .title {
   display: flex;
   justify-content: space-around;
+  font-size: small;
+  padding: 7px;
+  border-top: 0.5px solid rgba(165, 164, 164, 0.4);
+  border-bottom: 0.5px solid rgba(165, 164, 164, 0.4);
 }
 
 .cart__item__image {
