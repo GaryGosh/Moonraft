@@ -4,6 +4,7 @@ async function fetchData() {
   const request = await fetch("data.json")
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       data.items.map((item) => {
         const productWrapper = document.createElement("div");
         productWrapper.classList.add("productWrapper");
@@ -41,16 +42,16 @@ async function fetchData() {
         image.setAttribute("src", item.image);
       });
 
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let cart = [];
 
       const cartDOM = document.querySelector(".cart");
       const addToCartButtonsDOM = document.querySelectorAll(
         '[data-action="ADD_TO_CART"]'
       );
 
-      console.log("cart", addToCartButtonsDOM);
+      /* console.log("cart", addToCartButtonsDOM);
 
-      console.log("cart", cart);
+      console.log("cart", cart); */
 
       if (cart.length > 0) {
         cart.forEach((cartItem) => {
@@ -82,6 +83,7 @@ async function fetchData() {
               .getAttribute("src"),
             name: productDOM.querySelector(".productName").innerText,
             price: productDOM.querySelector(".actualPrice").innerText,
+            displayPrice: productDOM.querySelector(".displayPrice").innerText,
             quantity: 1,
           };
           /* console.log(product); */
@@ -93,7 +95,7 @@ async function fetchData() {
           if (!isInCart) {
             insertItemToDOM(product);
             cart.push(product);
-            saveCart();
+
             handleActionButtons(addToCartButton, product);
           }
         });
@@ -119,6 +121,16 @@ async function fetchData() {
       function handleActionButtons(addToCartButton, product) {
         addToCartButton.innerText = "Added";
         addToCartButton.disabled = true;
+        let cartTotal = 0;
+        let cartQuantity = 0;
+        cart.forEach((cartItem) => {
+          cartTotal += cartItem.quantity * cartItem.price;
+          cartQuantity += cartItem.quantity;
+        });
+        const cartFooter = document.querySelector(".cart-footer");
+        cartFooter.querySelector(".cartTotal").innerText = cartTotal;
+        cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
+        cartFooter.querySelector(".totalQty").innerText = `(${cartQuantity})`;
 
         const cartItemsDOM = cartDOM.querySelectorAll(".cart__item");
         cartItemsDOM.forEach((cartItemDOM) => {
@@ -140,51 +152,69 @@ async function fetchData() {
         });
       }
 
-      const cartFooter = document.querySelector(".cart-footer");
       function increaseItem(product, cartItemDOM) {
+        const cartFooter = document.querySelector(".cart-footer");
+        /* console.log("cartFooter", cartFooter); */
         let cartTotal = 0;
+        let cartQuantity = 0;
+        let discount = 0;
         cart.forEach((cartItem) => {
+          cartTotal += cartItem.quantity * cartItem.price;
+          cartQuantity += cartItem.quantity;
+          discount +=
+            cartItem.quantity * (cartItem.displayPrice - cartItem.price);
           if (cartItem.name === product.name) {
-            cartTotal += cartItem.quantity * cartItem.price;
             cartItemDOM.querySelector(
               ".cart__item__quantity"
             ).innerText = ++cartItem.quantity;
             cartItemDOM.querySelector(".cart__item__price").innerText =
               cartItem.price * product.quantity;
-            cartFooter.querySelector(".cartTotal").innerText = cartTotal;
-            cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
-
-            saveCart();
+            console.log("cart", cart);
           }
         });
+        cartFooter.querySelector(".cartTotal").innerText = cartTotal;
+        cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
+        cartFooter.querySelector(".totalQty").innerText = `(${cartQuantity})`;
+        cartFooter.querySelector(".discount").innerText = discount;
+        console.log("increaseItem");
       }
 
       function decreaseItem(product, cartItemDOM, addToCartButton) {
         let cartTotal = 0;
+        let cartQuantity = 0;
+        let discount = 0;
+        const cartFooter = document.querySelector(".cart-footer");
+        console.log("cartFooter", cartFooter);
         cart.forEach((cartItem) => {
+          cartTotal += cartItem.quantity * cartItem.price;
+          cartQuantity += cartItem.quantity;
+          discount +=
+            cartItem.quantity * (cartItem.displayPrice - cartItem.price);
+
           if (cartItem.name === product.name) {
-            cartTotal += cartItem.quantity * cartItem.price;
             if (cartItem.quantity > 1) {
               cartItemDOM.querySelector(
                 ".cart__item__quantity"
               ).innerText = --cartItem.quantity;
               cartItemDOM.querySelector(".cart__item__price").innerText =
                 cartItem.price * product.quantity;
-              cartFooter.querySelector(".cartTotal").innerText = cartTotal;
-              cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
-              saveCart();
             } else {
               removeItem(product, cartItemDOM, addToCartButton);
             }
           }
         });
+        cartFooter.querySelector(".cartTotal").innerText = cartTotal;
+        cartFooter.querySelector(".subTotal").innerText = `$${cartTotal}`;
+        cartFooter.querySelector(".totalQty").innerText = `(${cartQuantity})`;
+        cartFooter.querySelector(".discount").innerText = discount;
+        console.log("decreaseItem");
       }
 
       function removeItem(product, cartItemDOM, addToCartButton) {
         cartItemDOM.classList.add("cart__item__removed");
         setTimeout(() => cartItemDOM.remove(), 300);
         cart = cart.filter((cartItem) => cartItem.name !== product.name);
-        saveCart();
+
         addToCartButton.innerText = "Add To Cart";
         addToCartButton.disabled = false;
 
@@ -194,30 +224,32 @@ async function fetchData() {
       }
 
       function addCartFooter() {
+        let cartTotal = 0;
+        let cartQuantity = 0;
+        let discount = 0;
+        cart.forEach((cartItem) => {
+          cartTotal += cartItem.quantity * cartItem.price;
+          cartQuantity += cartItem.quantity;
+          discount +=
+            cartItem.quantity * (cartItem.displayPrice - cartItem.price);
+        });
+        console.log("discount", discount);
         if (document.querySelector(".cart-footer") === null) {
-          let cartTotal = 0;
-          let cartQuantity = 0;
-          cart.forEach((cartItem) => {
-            cartTotal += cartItem.quantity * cartItem.price;
-            cartQuantity += cartItem.quantity;
-          });
           cartDOM.insertAdjacentHTML(
             "afterend",
             `
                 <div class="cart-footer">
                     <p>Total</p>
                     <ul>
-                        <li>Items(${cartQuantity})<span>:</span><span class="cartTotal">${cartTotal}</span></li>
-                        <li class="subTotoal"><b>Order Total<b><span>:</span><span class="subTotal">$${cartTotal}</span></li>
+                        <li>Items<span class="totalQty">(${cartQuantity})</span><span>:</span><span class="cartTotal">${cartTotal}</span></li>
+                        <li><span>Discount</span><span>:</span><span class="discount">${discount}</span></li>
+                        <li class="totalPrice"><b>Order Total<b><span>:</span><span class="subTotal">$${cartTotal}</span></li>
 
                     </ul>
                 </div>
             `
           );
         }
-      }
-      function saveCart() {
-        localStorage.setItem("cart", JSON.stringify(cart));
       }
     })
     .catch((err) => {

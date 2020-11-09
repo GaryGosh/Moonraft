@@ -133,7 +133,7 @@ button:disabled:hover {
   margin-right: 2em;
 }
 
-.cart-footer > ul > li.subTotoal {
+.cart-footer > ul > li.totalPrice {
   padding-top: 25px;
   padding-bottom: 15px;
   margin-left: 0;
